@@ -1,0 +1,36 @@
+{
+  "name": "vestin/walle-workerman",
+  "description": "walle plugin",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vestin",
+      "email": "bombzds@163.com"
+    }
+  ],
+  "require": {
+    "workerman/workerman": "^3.4",
+    "illuminate/database": "*",
+    "league/tactician": "1.*",
+    "hassankhan/config": "*",
+    "vlucas/phpdotenv": "2.*",
+    "pimple/pimple": "~3.0",
+    "monolog/monolog": "1.*",
+    "nikic/fast-route": "*",
+    "symfony/event-dispatcher": "3.3.*"
+  },
+  "require-dev": {
+    "codeception/codeception": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "./app"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "tests\\": "./tests/testClass"
+    }
+  }
+}
