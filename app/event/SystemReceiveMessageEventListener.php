@@ -11,11 +11,11 @@ namespace app\event;
 use app\component\EventListenerInterface;
 use Symfony\Component\EventDispatcher\Event;
 
-class SystemAppReceiveMessageEventListener implements EventListenerInterface
+class SystemReceiveMessageEventListener implements EventListenerInterface
 {
 
     /**
-     * @param SystemAppReceiveMessageEvent $event
+     * @param SystemReceiveMessageEvent $event
      */
     public function handle(Event $event)
     {

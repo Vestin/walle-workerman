@@ -8,9 +8,20 @@
 
 namespace app\core;
 
+use app\component\WalleRequest;
+use app\component\WalleResponse;
 use FastRoute\Dispatcher;
 use Pimple\Container;
+use Workerman\Connection\ConnectionInterface;
 
+/**
+ * Class MessageHandle
+ * @package app\core
+ *
+ * @property WalleRequest $request
+ * @property WalleResponse $response
+ * @property ConnectionInterface $connection
+ */
 class MessageHandle extends WalleContainer
 {
 

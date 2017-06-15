@@ -23,7 +23,10 @@
  */
 
 return [
-    "system.app.receive_message" => [
-        \app\event\SystemAppReceiveMessageEventListener::class,
+    \app\event\SystemReceiveMessageEvent::NAME => [
+        \app\event\SystemReceiveMessageEventListener::class,
+    ],
+    \app\event\SystemAfterMessageHandleInitEvent::NAME =>[
+        \app\component\Auth::class
     ]
 ];

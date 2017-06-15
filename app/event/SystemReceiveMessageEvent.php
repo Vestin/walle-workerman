@@ -11,15 +11,15 @@ namespace app\event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-class SystemAppReceiveMessageEvent extends Event
+class SystemReceiveMessageEvent extends Event
 {
 
-    const NAME = 'system.app.receive_message';
+    const NAME = 'system.receive_message';
 
     protected $message;
 
     /**
-     * SystemAppReceiveMessageEvent constructor.
+     * SystemReceiveMessageEvent constructor.
      * @param $message
      */
     public function __construct($message)

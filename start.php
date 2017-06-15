@@ -38,18 +38,24 @@ $ws_worker->onWorkerStart = function ($worker) use ($conf) {
 $ws_worker->onMessage = function (\Workerman\Connection\ConnectionInterface $connection, $data) use (
     $ws_worker
 ) {
-    $systemAppReceiveMessageEvent = new \app\event\SystemAppReceiveMessageEvent($data);
-    \app\core\app::$app->eventDispatcher->dispatch($systemAppReceiveMessageEvent::NAME,$systemAppReceiveMessageEvent);
-
-    //var_dump($ws_worker->id);
-    global $messageHandler;
-    $messageHandler = new \app\core\MessageHandle($connection, $data);
 
     try {
+        $systemAppReceiveMessageEvent = new \app\event\SystemReceiveMessageEvent($data);
+        \app\core\app::$app->eventDispatcher->dispatch($systemAppReceiveMessageEvent::NAME, $systemAppReceiveMessageEvent);
+
+        //var_dump($ws_worker->id);
+        global $messageHandler;
+        $messageHandler = new \app\core\MessageHandle($connection, $data);
+
+        $systemAfterMessageHandleInit = new \app\event\SystemAfterMessageHandleInitEvent();
+        \app\core\app::$app->eventDispatcher->dispatch($systemAfterMessageHandleInit::NAME, $systemAfterMessageHandleInit);
+
         $messageHandler->handle();
+    } catch (\app\exception\UserException $e) {
+        //var_dump($e->getFile() . '|' . $e->getLine());
+        $connection->send(json_encode(['status' => 0, 'code' => $e->getCode(), 'error_message' => $e->getMessage()]));
     } catch (Exception $e) {
-        unset($messageHandler);
-        var_dump($e->getFile().'|'.$e->getLine());
+        //var_dump($e->getFile() . '|' . $e->getLine());
         $connection->send(json_encode(['status' => 0, 'error_message' => $e->getMessage()]));
     }
 
