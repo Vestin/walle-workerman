@@ -8,9 +8,9 @@
 
 namespace app\service;
 
-use app\core\app;
+use app\component\app;
 use FastRoute\Dispatcher;
-use app\core\contracts\ServiceInterface;
+use core\contracts\ServiceInterface;
 
 class DispatcherService implements ServiceInterface
 {

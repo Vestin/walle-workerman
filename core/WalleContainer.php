@@ -6,16 +6,16 @@
  * Time: 8:31 PM
  */
 
-namespace app\core;
+namespace core;
 
 use Pimple\Container;
-use app\core\contracts\ServiceFactoryInterface;
-use app\core\contracts\ServiceInterface;
+use core\contracts\ServiceFactoryInterface;
+use core\contracts\ServiceInterface;
 
 /**
  * Class WalleContainer
  * @property Container $container
- * @package app\core
+ * @package core
  */
 class WalleContainer implements WalleContainerInterface
 {

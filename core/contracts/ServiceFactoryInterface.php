@@ -6,14 +6,14 @@
  * Time: 4:35 PM
  */
 
-namespace app\core\contracts;
+namespace core\contracts;
 
 /**
  * 服务注册
  * Interface ServiceInterface
  * @package sliver\contracts\ConfigInterface
  */
-interface ServiceInterface
+interface ServiceFactoryInterface
 {
     /**
      * 注册

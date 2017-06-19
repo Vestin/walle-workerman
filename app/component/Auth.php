@@ -21,18 +21,12 @@ class Auth implements EventListenerInterface
      */
     public function handle(Event $event)
     {
-        var_dump(1);
         global $messageHandler;
         $requestParams = $messageHandler->request->getParams();
-        var_dump($requestParams);
         if(!isset($requestParams['token']) || empty($requestParams['token'])){
-            var_dump(12);
             throw AuthException::incorrectToken();
         }
-        var_dump(3);
         $user = User::findByToken($requestParams['token']);
-        var_dump($user);
-        var_dump(4);
         if(!$user){
             throw AuthException::incorrectToken();
         }

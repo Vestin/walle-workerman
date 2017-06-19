@@ -6,7 +6,7 @@
  * Time: 4:33 PM
  */
 
-namespace app\service;
+namespace job\service;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -18,7 +18,7 @@ class LogService implements ServiceInterface
     public function register()
     {
         $log = new Logger('app');
-        $log->pushHandler(new StreamHandler('../runtime/app.log'),Logger::WARNING);
+        $log->pushHandler(new StreamHandler('/tmp/mytest/runtime/app.log',Logger::WARNING));
         return $log;
     }
 

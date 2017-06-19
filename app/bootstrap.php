@@ -7,7 +7,7 @@
  */
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use app\core\app;
+use app\component\app;
 
 $dbConfig = app::$app->config['db'];
 

@@ -9,9 +9,9 @@
 namespace app\service;
 
 use app\component\WalleRequest;
-use app\core\app;
-use app\core\contracts\ServiceInterface;
-use app\core\MessageHandle;
+use core\app;
+use core\contracts\ServiceInterface;
+use core\MessageHandle;
 
 class RequestService implements ServiceInterface
 {

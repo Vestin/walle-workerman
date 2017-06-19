@@ -9,7 +9,7 @@
 namespace app\service;
 
 use app\component\ControllerDispatcher;
-use app\core\contracts\ServiceInterface;
+use core\contracts\ServiceInterface;
 
 class ControllerDispatcherService implements ServiceInterface
 {

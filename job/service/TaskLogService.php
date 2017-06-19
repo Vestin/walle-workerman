@@ -6,13 +6,13 @@
  * Time: 4:33 PM
  */
 
-namespace app\service;
+namespace job\service;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use core\contracts\ServiceInterface;
 
-class LogService implements ServiceInterface
+class TaskLogService implements ServiceInterface
 {
 
     public function register()

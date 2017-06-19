@@ -8,6 +8,7 @@
 
 return [
     "version" => '1.0.0',
+    "name" => 'app',
     "db" => require '_db.php',
     "user" => getenv("user"),
     "basicServices" => [

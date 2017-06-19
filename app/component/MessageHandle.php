@@ -6,17 +6,16 @@
  * Time: 8:25 PM
  */
 
-namespace app\core;
+namespace app\component;
 
-use app\component\WalleRequest;
-use app\component\WalleResponse;
+use core\WalleContainer;
 use FastRoute\Dispatcher;
 use Pimple\Container;
 use Workerman\Connection\ConnectionInterface;
 
 /**
  * Class MessageHandle
- * @package app\core
+ * @package core
  *
  * @property WalleRequest $request
  * @property WalleResponse $response

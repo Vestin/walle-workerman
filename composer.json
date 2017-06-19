@@ -18,14 +18,19 @@
     "pimple/pimple": "~3.0",
     "monolog/monolog": "1.*",
     "nikic/fast-route": "*",
-    "symfony/event-dispatcher": "3.3.*"
+    "symfony/event-dispatcher": "3.3.*",
+    "vestin/logic-checker": "1.*"
   },
   "require-dev": {
     "codeception/codeception": "*"
   },
   "autoload": {
     "psr-4": {
-      "app\\": "./app"
+      "app\\": "./app",
+      "core\\": "./core",
+      "job\\": "./job",
+      "queue\\": "./queue",
+      "model\\": "./model"
     }
   },
   "autoload-dev": {

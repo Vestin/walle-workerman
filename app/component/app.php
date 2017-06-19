@@ -6,8 +6,9 @@
  * Time: 10:34 AM
  */
 
-namespace app\core;
+namespace app\component;
 
+use core\WalleContainer;
 use Pimple\Container;
 
 /**
@@ -39,7 +40,7 @@ class app extends WalleContainer
     {
         //加载路由
         require $this->config['basicServicesConfig']['route']['routeFile'];
-        require __DIR__.'/bootstrap.php';
+        require __DIR__.'/../bootstrap.php';
     }
 
     static public function init($config)

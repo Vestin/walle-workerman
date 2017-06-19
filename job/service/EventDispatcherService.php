@@ -6,7 +6,7 @@
  * Time: 4:33 PM
  */
 
-namespace app\service;
+namespace job\service;
 
 use core\contracts\ServiceInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;

@@ -6,7 +6,7 @@
  * Time: 8:31 PM
  */
 
-namespace app\core;
+namespace core;
 
 
 /**

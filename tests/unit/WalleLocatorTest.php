@@ -19,8 +19,8 @@ class WalleLocatorTest extends \Codeception\Test\Unit
     // tests
     public function testWalleLocatorFeature()
     {
-        $Locator = new \app\component\WalleLocator();
-        $handler = $Locator->getHandlerForCommand(new \tests\command\OkCommand());
-        $this->assertEquals($handler,'app\\handler\\OkCommandHandler');
+        $Locator = new \job\component\WalleLocator();
+        $handler = $Locator->getHandlerForCommand(\tests\command\OkCommand::class);
+        $this->assertEquals($handler,'job\\handler\\OkCommandHandler');
     }
 }

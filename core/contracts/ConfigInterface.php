@@ -6,7 +6,7 @@
  * Time: 12:09 PM
  */
 
-namespace app\core\contracts;
+namespace core\contracts;
 
 
 interface ConfigInterface

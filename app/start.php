@@ -6,21 +6,23 @@
  * Time: 5:23 PM
  */
 
-include "vendor/autoload.php";
+include __DIR__."/../vendor/autoload.php";
 
 use Workerman\Worker;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use app\component\app;
+use app\component\MessageHandle;
 
 /**
  * 加载环境参数
  */
-$env = new \Dotenv\Dotenv(__DIR__);
+$env = new \Dotenv\Dotenv(__DIR__.'/../');
 $env->load();
 
 /**
  * 加载配置信息
  */
-$conf = new \Noodlehaus\Config('./app/config/config.php');
+$conf = new \Noodlehaus\Config(__DIR__.'/config/config.php');
 
 // 创建一个Worker监听2346端口，使用websocket协议通讯
 $ws_worker = new Worker("tcp://0.0.0.0:2346");
@@ -30,8 +32,8 @@ $ws_worker->count = 4;
 
 $ws_worker->onWorkerStart = function ($worker) use ($conf) {
     //实例化共用组件
-    \app\core\app::init($conf);
-    \app\core\app::$app->bootstrap();
+    app::init($conf);
+    app::$app->bootstrap();
 };
 
 // 当收到客户端发来的数据后返回hello $data给客户端
@@ -41,14 +43,14 @@ $ws_worker->onMessage = function (\Workerman\Connection\ConnectionInterface $con
 
     try {
         $systemAppReceiveMessageEvent = new \app\event\SystemReceiveMessageEvent($data);
-        \app\core\app::$app->eventDispatcher->dispatch($systemAppReceiveMessageEvent::NAME, $systemAppReceiveMessageEvent);
+        app::$app->eventDispatcher->dispatch($systemAppReceiveMessageEvent::NAME, $systemAppReceiveMessageEvent);
 
         //var_dump($ws_worker->id);
         global $messageHandler;
-        $messageHandler = new \app\core\MessageHandle($connection, $data);
+        $messageHandler = new MessageHandle($connection, $data);
 
         $systemAfterMessageHandleInit = new \app\event\SystemAfterMessageHandleInitEvent();
-        \app\core\app::$app->eventDispatcher->dispatch($systemAfterMessageHandleInit::NAME, $systemAfterMessageHandleInit);
+        app::$app->eventDispatcher->dispatch($systemAfterMessageHandleInit::NAME, $systemAfterMessageHandleInit);
 
         $messageHandler->handle();
     } catch (\app\exception\UserException $e) {
