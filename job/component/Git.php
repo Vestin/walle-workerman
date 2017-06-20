@@ -46,15 +46,15 @@ class Git extends Command {
     /**
      * 更新到指定commit版本
      *
-     * @param TaskModel $task
+     * @param TaskModel $taskModel
      * @return bool
      */
-    public function updateToVersion(TaskModel $task) {
+    public function updateToVersion(TaskModel $taskModel) {
         // 先更新
-        $destination = Project::getDeployWorkspace($task->link_id);
-        $this->updateRepo($task->branch, $destination);
+        $destination = $this->project->getDeployWorkspace($taskModel->link_id);
+        $this->updateRepo($taskModel->branch, $destination);
         $cmd[] = sprintf('cd %s ', $destination);
-        $cmd[] = sprintf('/usr/bin/env git reset -q --hard %s', $task->commit_id);
+        $cmd[] = sprintf('/usr/bin/env git reset -q --hard %s', $taskModel->commit_id);
         $command = join(' && ', $cmd);
 
         return $this->runLocalCommand($command);

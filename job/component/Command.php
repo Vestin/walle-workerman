@@ -155,7 +155,7 @@ class Command
 
     public function log($message)
     {
-        $this->logger->warning($message);
+        $this->logger->info($message);
     }
 
     /**

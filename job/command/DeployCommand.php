@@ -43,7 +43,7 @@ class DeployCommand extends Command
      * @param \job\component\Task $task
      * @param \job\component\Folder $folder
      */
-    public function __construct(TaskModel $taskModel,Project $project,Task $task,Folder $folder)
+    private function __construct(TaskModel $taskModel, Project $project, Task $task, Folder $folder)
     {
         $this->taskModel = $taskModel;
         $this->project = $project;
@@ -52,13 +52,22 @@ class DeployCommand extends Command
     }
 
     /**
+     * @return TaskModel
+     */
+    public function getTaskModel()
+    {
+        return $this->taskModel;
+    }
+
+    /**
      * @param TaskModel $taskModel
      * @return static
      */
-    public function fromTask(TaskModel $taskModel)
+    public static function fromTask(TaskModel $taskModel)
     {
         global $jobHandle;
-        return new static($taskModel,new Task($project,$jobHandle->logger),new Folder($project,$jobHandle->logger));
+        return new static($taskModel, $taskModel->project, new Task($taskModel->project, $jobHandle->logger),
+            new Folder($taskModel->project, $jobHandle->logger));
     }
 
     /**
@@ -84,8 +93,6 @@ class DeployCommand extends Command
     {
         return $this->folder;
     }
-
-
 
 
 }

@@ -55,13 +55,12 @@ class JobHandle extends WalleContainer
         // 加载路由
         echo 'handle job' . PHP_EOL;
 
-        var_dump($this->taskId);
         $taskModel = Task::find($this->taskId);
         if (!$taskModel) {
             throw new UserException('unknow taskId');
         }
 
-        $this->container['task'] = $taskModel;
+        $this->container['taskModel'] = $taskModel;
 
         $log = new Logger('app');
         $log->pushHandler(new StreamHandler('/tmp/mytest/runtime/task_' . $this->taskId . '/' . time() . '.log',
@@ -72,7 +71,7 @@ class JobHandle extends WalleContainer
         $this->logger->info('log component bootstrap success.');
 
         // 任务失败或者审核通过时可发起上线
-        if (!in_array($this->task->status, [Task::STATUS_PASS, Task::STATUS_FAILED])) {
+        if (!in_array($this->taskModel->status, [Task::STATUS_PASS, Task::STATUS_FAILED])) {
             throw new UserException('deployment only done for once');
         }
 
@@ -88,7 +87,7 @@ class JobHandle extends WalleContainer
             $handleMiddleware,
         ]);
 
-        $command = ProjectConfigCheckCommand::fromProjectId($this->task->project_id);
+        $command = ProjectConfigCheckCommand::fromProjectId($this->taskModel->project_id);
         $res = $commandBus->handle($command);
         if($res==false){
             // 命令执行失败
@@ -96,10 +95,13 @@ class JobHandle extends WalleContainer
             return false;
         }
 
-        $deployCommand = DeployCommand::getMs();
-
-
-
+        $deployCommand = DeployCommand::fromTask($this->taskModel);
+        $res = $commandBus->handle($deployCommand);
+        if($res==false){
+            // 命令执行失败
+            $this->logger->error('Failed.'.json_encode($command->getError()));
+            return false;
+        }
 
         echo 'done' . PHP_EOL;
     }

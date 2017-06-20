@@ -18,13 +18,13 @@ class Folder extends Command {
     /**
      * 初始化宿主机部署工作空间
      *
-     * @param TaskModel $task
+     * @param TaskModel $taskModel
      * @return bool|int
      */
-    public function initLocalWorkspace(TaskModel $task) {
+    public function initLocalWorkspace(TaskModel $taskModel) {
 
-        $version = $task->link_id;
-        $branch = $task->branch;
+        $version = $taskModel->link_id;
+        $branch = $taskModel->branch;
 
         if ($this->project->repo_type == Project::REPO_SVN) {
             // svn cp 过来指定分支的目录, 然后 svn up 到指定版本
@@ -57,23 +57,23 @@ class Folder extends Command {
      * 将多个文件/目录通过tar + scp传输到指定的多个目标机
      *
      * @param Project $project
-     * @param TaskModel $task
+     * @param TaskModel $taskModel
      * @return bool
      * @throws \Exception
      */
-    public function scpCopyFiles(Project $project, TaskModel $task) {
+    public function scpCopyFiles(Project $project, TaskModel $taskModel) {
 
         // 1. 宿主机 tar 打包
-        $this->_packageFiles($project, $task);
+        $this->_packageFiles($project, $taskModel);
 
         // 2. 传输 tar.gz 文件
         foreach ($this->project->getHosts() as $remoteHost) {
             // 循环 scp 传输
-            $this->_copyPackageToServer($remoteHost, $project, $task);
+            $this->_copyPackageToServer($remoteHost, $project, $taskModel);
         }
 
         // 3. 目标机 tar 解压
-        $this->_unpackageFiles($project, $task);
+        $this->_unpackageFiles($project, $taskModel);
 
         return true;
     }

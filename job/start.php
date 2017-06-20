@@ -69,10 +69,13 @@ $job->onWorkerStart = function ($job) use ($conf) {
                 $jobHandle = new \job\component\JobHandle($taskId);
                 try{
                     $jobHandle->handle();
+                    echo 'done';
                 }catch (\core\UserException $e){
-                    \job\component\app::$app->log->error($e->getMessage().' in file:'.$e->getFile().' in line:'.$e->getLine());
+                    $jobHandle->logger->error($e->getMessage().' in file:'.$e->getFile().' in line:'.$e->getLine());
+                }catch (Exception $e){
+                    $jobHandle->logger->error($e->getMessage().' in file:'.$e->getFile().' in line:'.$e->getLine());
                 }
-
+                $jobHandle->logger->info('job done.');
             }
         }
 

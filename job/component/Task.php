@@ -24,7 +24,7 @@ class Task extends Command {
 
         // 本地可能要做一些依赖环境变量的命令操作
         $cmd = ['. /etc/profile'];
-        $workspace = rtrim(Project::getDeployWorkspace($version), '/');
+        $workspace = rtrim($this->project->getDeployWorkspace($version), '/');
         $pattern = [
             '#{WORKSPACE}#',
         ];
@@ -53,7 +53,7 @@ class Task extends Command {
 
         // 本地可能要做一些依赖环境变量的命令操作
         $cmd = ['. /etc/profile'];
-        $workspace = rtrim(Project::getDeployWorkspace($version), '/');
+        $workspace = rtrim($this->project->getDeployWorkspace($version), '/');
         $pattern = [
             '#{WORKSPACE}#',
         ];
@@ -74,9 +74,9 @@ class Task extends Command {
      * 设置了版本保留数量，超出了设定值，则删除老版本
      */
     public function cleanUpReleasesVersion() {
-        $cmd[] = sprintf('cd %s', Project::getReleaseVersionDir());
-        $cmd[] = sprintf('rm -f %s/*.tar.gz', rtrim(Project::getReleaseVersionDir(), '/'));
-        $cmd[] = sprintf('ls -1 | sort -r | awk \'FNR > %d  {printf("rm -rf %%s\n", $0);}\' | bash', $this->config->keep_version_num);
+        $cmd[] = sprintf('cd %s', $this->project->getReleaseVersionDir());
+        $cmd[] = sprintf('rm -f %s/*.tar.gz', rtrim($this->project->getReleaseVersionDir(), '/'));
+        $cmd[] = sprintf('ls -1 | sort -r | awk \'FNR > %d  {printf("rm -rf %%s\n", $0);}\' | bash', $this->project->keep_version_num);
 
         $command = join(' && ', $cmd);
 
@@ -91,14 +91,14 @@ class Task extends Command {
      * @param $version string
      * @return string string
      */
-    public static function getRemoteTaskCommand($task, $version) {
+    public function getRemoteTaskCommand($task, $version) {
         $tasks = GlobalHelper::str2arr($task);
         if (empty($tasks)) return '';
 
         // 可能要做一些依赖环境变量的命令操作
         $cmd = ['. /etc/profile'];
-        $workspace = Project::getTargetWorkspace();
-        $version   = Project::getReleaseVersionDir($version);
+        $workspace = $this->project->getTargetWorkspace();
+        $version   = $this->project->getReleaseVersionDir($version);
         $pattern = [
             '#{WORKSPACE}#',
             '#{VERSION}#',
