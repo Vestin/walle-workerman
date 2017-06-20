@@ -15,13 +15,18 @@ composer install
 ```
 
 Edit config files
-* `app/config/_db.php`
-* `app/config/config.php`
+```
+cp .env.example .env
+// then edit .env fit your enviroment
+```
 
 ## Usage
 
-command line
-`php start.php start`
+1. start api service
+`php app/start.php start`
 
-deamon 
-`php start.php start -d`
+2. start queue service
+`php queue/start.php start`
+
+3. start background-job service
+`php job/start.php start`
